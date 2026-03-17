@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 31 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Mask group">
+<mask id="mask0_14971_5132" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="31" height="59">
+<rect id="Rectangle 151098" y="9.53674e-07" width="30.8571" height="58.2857" fill="var(--fill-0, #383838)"/>
+</mask>
+<g mask="url(#mask0_14971_5132)">
+<path id="Ellipse 73" d="M-4.19238 52.4353C-10.1902 51.3236 -15.5008 47.8749 -18.9559 42.8478C-22.4109 37.8206 -23.7275 31.6268 -22.6158 25.629C-21.5042 19.6312 -18.0555 14.3206 -13.0283 10.8655C-8.00117 7.41044 -1.80739 6.09391 4.19044 7.20554" stroke="var(--stroke-0, #FAFAFA)" stroke-width="2" stroke-linecap="round"/>
+</g>
+</g>
+</svg>

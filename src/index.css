@@ -1,0 +1,68 @@
+/*
+ * RIVERSIDE PROTOTYPE STYLES
+ * ============================================
+ * 
+ * IMPORTANT FOR AI ASSISTANTS:
+ * - Do NOT add custom colors - use Riverstyle CSS variables
+ * - Do NOT add custom typography - use Riverstyle font tokens
+ * - Only add layout utilities and page-specific styles
+ * 
+ * Available Riverstyle CSS Variables:
+ * - Colors: var(--color-primary-c800), var(--color-secondary-c900), etc.
+ * - Typography: var(--font-heading-large), var(--font-body-medium), etc.
+ * 
+ * See /riverstyle page or https://storybook.rs-prod.riverside.fm/
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-main, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  background: var(--color-black, #0a0a0a);
+  color: var(--color-secondary-c100, #fafafa);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout utilities - use these for page structure */
+.page-container {
+  min-height: 100%;
+  padding: 24px;
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}

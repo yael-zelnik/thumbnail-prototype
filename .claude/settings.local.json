@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:riverside.com)",
+      "Bash(npm install)",
+      "mcp__Claude_Preview__preview_start",
+      "WebFetch(domain:www.figma.com)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(open http://localhost:3000/thumbnails)",
+      "WebFetch(domain:riverside.fm)",
+      "WebFetch(domain:cdn.prod.website-files.com)",
+      "Bash(open /Users/yaelzelnik/Downloads/design-template-main/public/templates)",
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/yaelzelnik/Downloads/design-template-main/public/templates/Podcast Thumbnail \\(1\\).png\")",
+      "Bash(python3 -c \"from PIL import Image; print\\(''PIL available''\\)\")",
+      "Bash(pip3 install Pillow --quiet)",
+      "Bash(python3:*)",
+      "Bash(pip3 install numpy --quiet)",
+      "Bash(curl -s http://localhost:3000/thumbnails)",
+      "Bash(grep -r \"card\\\\|wallet\\\\|badge\" /Users/yaelzelnik/Downloads/design-template-main/node_modules/@riversidefm/riverstyle/icons/*/index.d.ts)",
+      "Bash(done)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{size_download}\" http://localhost:3000/templates/template-1.png)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{size_download}\" http://localhost:3000/templates/template-4.png)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{size_download}\" http://localhost:3000/templates/1speaker-2.png)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{size_download}\" http://localhost:3000/templates/3speaker-1.png)",
+      "Bash(open http://localhost:3000/templates/1speaker-2.png)",
+      "Bash(curl -sI http://localhost:3000/templates/1speaker-2.png)",
+      "Bash(open http://localhost:3000/chat-onboarding)",
+      "Bash(open /Users/yaelzelnik/Downloads/design-template.zip)",
+      "Bash(npm run:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/thumbnails)",
+      "Bash(npx vercel:*)",
+      "Bash(npx netlify-cli:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(gh auth:*)",
+      "Bash(git config:*)"
+    ]
+  }
+}

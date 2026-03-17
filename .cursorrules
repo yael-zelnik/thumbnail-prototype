@@ -1,0 +1,602 @@
+# Riverside Prototype - Cursor AI Rules
+
+## CRITICAL: Always Use Riverstyle Design System
+
+This is a Riverside prototype project. You MUST use the `@riversidefm/riverstyle` design system for ALL UI work.
+
+**Live Storybook:** https://storybook.rs-prod.riverside.fm/
+
+### ⚠️ ICONS: Always Check the Icon Set FIRST!
+
+**Most icons exist in the Riverstyle icon set.** Before creating ANY custom SVG icon, you MUST:
+
+1. **Check the icon folder:** `ls node_modules/@riversidefm/riverstyle/icons/{category}/`
+2. **Search all categories** - the icon might be in an unexpected folder
+3. **Find the file name** (e.g., `home-05.svg.js`)
+4. **Convert to component:** `Icons.{Category}.{PascalCaseName}` (e.g., `Icons.General.Home05`)
+
+Example conversions:
+
+- `home-05.svg.js` → `Icons.General.Home05`
+- `folder.svg.js` → `Icons.Files.Folder`
+- `calendar.svg.js` → `Icons.Time.Calendar`
+- `podcast.svg.js` → `Icons.MediaDevices.Podcast`
+- `user-plus-01.svg.js` → `Icons.Users.UserPlus01`
+- `video-recorder.svg.js` → `Icons.MediaDevices.VideoRecorder`
+
+**Only if an icon truly doesn't exist** after checking all categories, you may create a custom SVG following the design style.
+
+**🎨 IMPORTANT: Download SVGs from Figma, don't create them manually!**
+If an icon doesn't exist in Riverstyle, use the Figma MCP tool to download the SVG:
+
+```
+mcp_Figma_Desktop_get_design_context with dirForAssetWrites parameter
+```
+
+This exports the exact SVG from Figma to `/public/icons/`. Never try to recreate SVGs by hand.
+
+**See the Icons section below for full documentation.**
+
+### Required CSS Import
+
+The design system CSS is imported in `src/main.tsx`:
+
+```tsx
+import "@riversidefm/riverstyle/styles.css";
+```
+
+### Required Component Imports
+
+Always import components from the design system:
+
+```tsx
+import {
+  Button,
+  LinkButton,
+  IconButton,
+  Input,
+  InputField,
+  Checkbox,
+  Switcher,
+  Typography,
+  Avatar,
+  Toast,
+  Tabs,
+  Popover,
+  Tooltip,
+  TooltipIcon,
+  Spinner,
+  DefaultSelect,
+  Icons,
+} from "@riversidefm/riverstyle";
+```
+
+### Color Tokens (ALWAYS USE THESE)
+
+NEVER use hardcoded colors. Always use these CSS variables:
+
+#### Primary Colors (Purple)
+
+- `var(--color-primary-c100)` - #f2eeff (lightest)
+- `var(--color-primary-c200)` - #e7dfff
+- `var(--color-primary-c300)` - #d5c7ff
+- `var(--color-primary-c400)` - #c3afff
+- `var(--color-primary-c500)` - #b196ff
+- `var(--color-primary-c600)` - #9671ff
+- `var(--color-primary-c700)` - #875eff
+- `var(--color-primary-c800)` - #7848ff (main primary)
+- `var(--color-primary-c900)` - #5e3ac3 (darkest)
+
+#### Secondary Colors (Grays)
+
+- `var(--color-secondary-c100)` - #fafafa (white-ish)
+- `var(--color-secondary-c150)` - #dbdbdb
+- `var(--color-secondary-c200)` - #bbbbbb
+- `var(--color-secondary-c300)` - #888888
+- `var(--color-secondary-c400)` - #555555
+- `var(--color-secondary-c500)` - #444444
+- `var(--color-secondary-c600)` - #383838
+- `var(--color-secondary-c700)` - #2b2b2b
+- `var(--color-secondary-c800)` - #222222
+- `var(--color-secondary-c900)` - #1d1d1d
+- `var(--color-secondary-c1000)` - #151515
+- `var(--color-secondary-c1100)` - #0d0d0d (darkest)
+
+#### Base Colors
+
+- `var(--color-white)` - #ffffff
+- `var(--color-black)` - #0a0a0a
+
+#### State Colors
+
+- `var(--color-success-c500)` to `var(--color-success-c800)` - Greens
+- `var(--color-warning-c500)` to `var(--color-warning-c800)` - Yellows
+- `var(--color-error-c400)` to `var(--color-error-c800)` - Reds
+- `var(--color-upgrade-c500)` to `var(--color-upgrade-c800)` - Lime greens
+
+#### Accent Colors
+
+- `var(--color-purple)` - #b43dff
+- `var(--color-light-purple)` - #b377ff
+- `var(--color-pink)` - #e961ff
+- `var(--color-dark-blue)` - #5353fc
+- `var(--color-light-blue)` - #50c9ff
+- `var(--color-green)` - #67ffb1
+- `var(--color-neon)` - #c2ff44
+- `var(--color-yellow)` - #ffec45
+- `var(--color-orange)` - #ff8a00
+
+#### Transparent Colors
+
+- `var(--color-transparent-c10)` to `var(--color-transparent-c75)` - Black transparencies
+- `var(--color-transparent-p10)` to `var(--color-transparent-p50)` - Purple transparencies
+- `var(--color-transparent-w10)` / `var(--color-transparent-w30)` - White transparencies
+- `var(--color-modal-overlay)` - rgba(0, 0, 0, 0.5)
+
+### Typography Tokens (ALWAYS USE THESE)
+
+#### Font Family
+
+- `var(--font-family-main)` - Inter, sans-serif
+
+#### Headings
+
+```css
+font: var(--font-heading-xlarge); /* 800 36px/44px */
+font: var(--font-heading-large); /* 700 28px/36px */
+font: var(--font-heading-medium); /* 800 24px/20px */
+font: var(--font-heading-small); /* 800 20px/24px */
+font: var(--font-heading-xsmall); /* 800 16px/24px */
+font: var(--font-heading-xxsmall); /* 700 14px/20px */
+letter-spacing: var(--font-heading-xlarge-spacing); /* etc. */
+```
+
+#### Body Text
+
+```css
+font: var(--font-body-xlarge); /* 500 20px/28px */
+font: var(--font-body-large); /* 500 16px/24px */
+font: var(--font-body-medium); /* 400 14px/24px */
+font: var(--font-body-small); /* 500 12px/18px */
+letter-spacing: var(--font-body-medium-spacing); /* etc. */
+```
+
+#### Labels & Links
+
+```css
+font: var(--font-label-medium); /* 500 14px/20px */
+font: var(--font-label-small); /* 600 12px/20px */
+font: var(--font-link-medium); /* 600 14px/20px */
+font: var(--font-link-small); /* 700 12px/20px */
+font: var(--font-helper); /* 500 11px/20px */
+font: var(--font-tip); /* 600 11px/16px */
+font: var(--font-tiny-label); /* 500 10px/16px */
+```
+
+### Component Usage Examples
+
+#### Button
+
+Button variants include the height in the name: `{type}-{height}`
+
+- Types: `primary`, `secondary`, `tertiary`, `ghost`, `danger`, `upgrade`, `blurry`
+- Heights: `48`, `44`, `40`, `36`, `32` (pixels)
+
+```tsx
+// Standard buttons (48px height is default/most common)
+<Button variant="primary-48" onClick={() => {}}>Primary</Button>
+<Button variant="secondary-48" onClick={() => {}}>Secondary</Button>
+<Button variant="ghost-48" onClick={() => {}}>Ghost</Button>
+<Button variant="tertiary-48" onClick={() => {}}>Tertiary</Button>
+
+// Smaller buttons
+<Button variant="primary-36" onClick={() => {}}>Small Primary</Button>
+<Button variant="secondary-32" onClick={() => {}}>Tiny Secondary</Button>
+
+// Special variants
+<Button variant="danger-48" onClick={() => {}}>Delete</Button>
+<Button variant="upgrade-48" onClick={() => {}}>Upgrade</Button>
+
+// Loading state
+<Button variant="primary-48" loading onClick={() => {}}>Loading...</Button>
+```
+
+#### Input
+
+```tsx
+<Input placeholder="Enter text..." />
+<Input error="This field is required" />
+
+// For labeled inputs, use InputField with props objects:
+<InputField
+  inputProps={{ placeholder: "you@example.com" }}
+  labelProps={{ label: "Email" }}
+  errorProps={{ message: "" }}
+/>
+```
+
+#### Typography Component
+
+All available variants (camelCase):
+
+- Headings: `headingXLarge`, `headingLarge`, `headingMedium`, `headingSmall`, `headingXSmall`, `headingXXSmall`
+- Body: `bodyXlarge`, `bodyLarge`, `bodyMedium`, `bodySmall`
+- Labels: `labelMedium`, `labelSmall`
+- Links: `linkMedium`, `linkSmall`
+- Other: `tinyLabel`, `helper`, `tip`, `avatar`
+
+Color tokens (dot notation):
+
+- Primary: `primary.c100` to `primary.c900`
+- Secondary: `secondary.c100` to `secondary.c1100`
+- Success: `success.c500` to `success.c800`
+- Warning: `warning.c500` to `warning.c800`
+- Error: `error.c400` to `error.c800`
+- Upgrade: `upgrade.c500` to `upgrade.c800`
+- System: `white`, `black`
+
+```tsx
+<Typography variant="headingLarge">Title</Typography>
+<Typography variant="bodyMedium">Body text</Typography>
+<Typography variant="labelSmall">Label</Typography>
+<Typography variant="bodyMedium" color="primary.c800">Primary color</Typography>
+<Typography variant="bodyMedium" color="secondary.c300">Muted text</Typography>
+<Typography variant="bodyMedium" color="error.c700">Error text</Typography>
+<Typography variant="bodyMedium" color="success.c700">Success text</Typography>
+```
+
+#### Icons
+
+> ⚠️ **CRITICAL: NEVER create custom SVG icons!** All icons exist in the Riverstyle icon set.
+> Icons are from [Untitled UI Icons](https://www.untitledui.com/icons) plus custom Riverside icons.
+
+**How to find the correct icon name:**
+
+1. **Browse the icon files** in `node_modules/@riversidefm/riverstyle/icons/`
+2. **Convert file name to component name** using this pattern:
+   - File: `home-05.svg.js` → Component: `Icons.General.Home05`
+   - File: `user-plus-01.svg.js` → Component: `Icons.Users.UserPlus01`
+   - File: `video-recorder.svg.js` → Component: `Icons.MediaDevices.VideoRecorder`
+
+**Naming Convention:**
+
+- Kebab-case file names become PascalCase component names
+- Numbers stay at the end: `settings-01` → `Settings01`
+- Hyphens are removed: `arrow-right` → `ArrowRight`
+
+```tsx
+import { Icons } from '@riversidefm/riverstyle'
+
+// General icons (from node_modules/@riversidefm/riverstyle/icons/general/)
+<Icons.General.Home05 style={{ width: 24, height: 24 }} />        // home-05.svg.js
+<Icons.General.Settings01 style={{ width: 24, height: 24 }} />    // settings-01.svg.js
+<Icons.General.Settings02 style={{ width: 24, height: 24 }} />    // settings-02.svg.js
+<Icons.General.Plus style={{ width: 24, height: 24 }} />          // plus.svg.js
+<Icons.General.Check style={{ width: 24, height: 24 }} />         // check.svg.js
+<Icons.General.XClose style={{ width: 24, height: 24 }} />        // x-close.svg.js
+<Icons.General.SearchMd style={{ width: 24, height: 24 }} />      // search-md.svg.js
+<Icons.General.HelpCircle style={{ width: 24, height: 24 }} />    // help-circle.svg.js
+
+// Files icons (from node_modules/@riversidefm/riverstyle/icons/files/)
+<Icons.Files.Folder style={{ width: 24, height: 24 }} />          // folder.svg.js
+<Icons.Files.File01 style={{ width: 24, height: 24 }} />          // file-01.svg.js
+
+// Time icons (from node_modules/@riversidefm/riverstyle/icons/time/)
+<Icons.Time.Calendar style={{ width: 24, height: 24 }} />         // calendar.svg.js
+<Icons.Time.Clock style={{ width: 24, height: 24 }} />            // clock.svg.js
+
+// Users icons (from node_modules/@riversidefm/riverstyle/icons/users/)
+<Icons.Users.UserPlus01 style={{ width: 24, height: 24 }} />      // user-plus-01.svg.js
+<Icons.Users.User01 style={{ width: 24, height: 24 }} />          // user-01.svg.js
+
+// MediaDevices icons (from node_modules/@riversidefm/riverstyle/icons/media-devices/)
+<Icons.MediaDevices.Podcast style={{ width: 24, height: 24 }} />       // podcast.svg.js
+<Icons.MediaDevices.VideoRecorder style={{ width: 24, height: 24 }} /> // video-recorder.svg.js
+<Icons.MediaDevices.Microphone01 style={{ width: 24, height: 24 }} />  // microphone-01.svg.js
+
+// Arrows icons (from node_modules/@riversidefm/riverstyle/icons/arrows/)
+<Icons.Arrows.ArrowRight style={{ width: 24, height: 24 }} />     // arrow-right.svg.js
+<Icons.Arrows.ChevronDown style={{ width: 24, height: 24 }} />    // chevron-down.svg.js
+
+// AlertsFeedback icons (from node_modules/@riversidefm/riverstyle/icons/alerts-feedback/)
+<Icons.AlertsFeedback.Announcement01 style={{ width: 24, height: 24 }} />  // announcement-01.svg.js
+<Icons.AlertsFeedback.Bell01 style={{ width: 24, height: 24 }} />          // bell-01.svg.js
+```
+
+**Icon Categories (folder names in node_modules/@riversidefm/riverstyle/icons/):**
+
+| Category         | Folder              | Example Icons                                                          |
+| ---------------- | ------------------- | ---------------------------------------------------------------------- |
+| `General`        | `/general/`         | Home05, Settings01, Plus, Check, SearchMd, HelpCircle, Edit01, Trash01 |
+| `Arrows`         | `/arrows/`          | ArrowRight, ArrowLeft, ChevronDown, ChevronUp                          |
+| `AlertsFeedback` | `/alerts-feedback/` | Announcement01, Bell01, AlertCircle, InfoCircle                        |
+| `Files`          | `/files/`           | Folder, File01, FileText, Clipboard                                    |
+| `Time`           | `/time/`            | Calendar, Clock, AlarmClock                                            |
+| `Users`          | `/users/`           | User01, UserPlus01, Users01                                            |
+| `MediaDevices`   | `/media-devices/`   | Podcast, VideoRecorder, Microphone01, Play, Pause                      |
+| `Communications` | `/communications/`  | Mail01, Phone, MessageSquare                                           |
+| `Editor`         | `/editor/`          | Bold, Italic, Underline                                                |
+| `Magic`          | `/magic/`           | MagicClips, MagicCaptions, SmartLayouts                                |
+| `Riverside`      | `/riverside/`       | Webinar (custom Riverside icons)                                       |
+
+**To find an icon:**
+
+1. Check the folder: `ls node_modules/@riversidefm/riverstyle/icons/{category}/`
+2. Find the file name (e.g., `home-05.svg.js`)
+3. Convert to component: `Icons.{Category}.{PascalCaseName}`
+
+**Browse icons visually:** https://www.untitledui.com/icons
+
+#### If Icon Doesn't Exist - Download from Figma
+
+**⚠️ NEVER create custom SVG icons by hand!** If an icon doesn't exist in Riverstyle:
+
+1. **Get the node ID** from the Figma design (e.g., from the URL or layer)
+2. **Use the Figma MCP tool** to download the SVG:
+
+```
+mcp_Figma_Desktop_get_design_context({
+  nodeId: "1234:5678",
+  dirForAssetWrites: "/path/to/project/public/icons"
+})
+```
+
+3. **Reference the downloaded SVG** in your component:
+
+```tsx
+// Icon downloaded from Figma to /public/icons/
+const customIcon = '/icons/abc123.svg'
+
+// Use in component
+<img src={customIcon} alt="" style={{ width: 20, height: 20 }} />
+```
+
+This ensures pixel-perfect accuracy with the original Figma design.
+
+#### IconButton
+
+IconButton variants: `{type}-{size}`
+
+- Types: `ghost`, `secondary`, `round-primary`, `round-secondary`, `blurry`
+- Sizes: `44`, `40`, `36`, `32`, `24`
+- ⚠️ NOTE: IconButton does NOT have `primary` or `danger` variants (use regular Button for those)
+
+```tsx
+<IconButton variant="ghost-44" icon={Icons.General.Settings01} aria-label="Settings" onClick={() => {}} />
+<IconButton variant="secondary-44" icon={Icons.General.Plus} aria-label="Add" onClick={() => {}} />
+<IconButton variant="round-primary-44" icon={Icons.General.Check} aria-label="Confirm" onClick={() => {}} />
+<IconButton variant="round-secondary-44" icon={Icons.General.XClose} aria-label="Close" onClick={() => {}} />
+<IconButton variant="blurry-44" icon={Icons.General.SearchMd} aria-label="Search" onClick={() => {}} />
+```
+
+#### Checkbox
+
+```tsx
+<Checkbox
+  name="fieldName"
+  checked={checked}
+  onChange={(e) => setChecked(e.target.checked)}
+/>
+```
+
+#### Switcher
+
+```tsx
+<Switcher
+  checked={on}
+  onChange={(checked) => setOn(checked)}
+  aria-label="Toggle feature"
+/>
+```
+
+#### Avatar
+
+```tsx
+<Avatar variant="circle-24">AB</Avatar>
+<Avatar variant="circle-32">CD</Avatar>
+<Avatar variant="circle-40">EF</Avatar>
+```
+
+#### Tabs
+
+```tsx
+<Tabs value={activeTab} onChange={setActiveTab}>
+  <Tabs.Tab value="tab1">First Tab</Tabs.Tab>
+  <Tabs.Tab value="tab2">Second Tab</Tabs.Tab>
+</Tabs>
+```
+
+#### DefaultSelect
+
+```tsx
+const options = [
+  { id: '1', label: 'Option 1' },
+  { id: '2', label: 'Option 2' },
+]
+
+<DefaultSelect
+  options={options}
+  selectedOption={selectedOption}
+  setSelectedOption={setSelectedOption}
+  placeholder="Select..."
+/>
+```
+
+#### Toast
+
+```tsx
+// Add container to your app once
+<Toast.Container />;
+
+// Show toasts
+Toast.tasks.success("Success message");
+Toast.tasks.error("Error message");
+Toast.tasks.info("Info message");
+```
+
+#### Popover
+
+```tsx
+const ref = useRef<HTMLButtonElement>(null)
+
+<Button variant="secondary-48" onClick={() => setOpen(true)} reference={ref}>
+  Open Popover
+</Button>
+<Popover
+  opened={open}
+  onClose={() => setOpen(false)}
+  reference={ref}
+  placement="bottom-start"
+>
+  <div>Popover content</div>
+</Popover>
+```
+
+#### TooltipIcon
+
+```tsx
+<TooltipIcon content="Helpful information here" />
+```
+
+### Card/Surface Pattern
+
+```tsx
+<div
+  style={{
+    background: "var(--color-secondary-c900)",
+    borderRadius: "12px",
+    padding: "24px",
+    border: "1px solid var(--color-secondary-c700)",
+  }}
+>
+  <Typography variant="headingSmall">Card Title</Typography>
+  <Typography
+    variant="bodyMedium"
+    style={{ color: "var(--color-secondary-c300)" }}
+  >
+    Card description
+  </Typography>
+</div>
+```
+
+### File Structure
+
+- `/src/pages/` - Page components (add new pages here)
+- `/src/components/my-components/` - Custom components (ONLY when Riverstyle doesn't have it)
+- `/src/pages/PrototypePage.tsx` - Riverstyle component showcase
+- `/src/pages/MyComponentsPage.tsx` - Custom components showcase
+
+### Reference
+
+- **Local:** Visit `/riverstyle` in the running app for embedded Storybook
+- **Local:** Visit `/my-components` to see custom components
+- **Live:** https://storybook.rs-prod.riverside.fm/
+
+---
+
+## Creating Custom Elements (When Design System Doesn't Cover It)
+
+The design system doesn't cover everything. When you need something custom, follow these guidelines:
+
+### Before Creating Custom - MANDATORY CHECKS:
+
+1. **Search Riverstyle Storybook** - https://storybook.rs-prod.riverside.fm/
+   - Check ALL categories: Base, Combined, Form, Selects
+   - Search by name and by function
+2. **Check if it can be composed** from existing Riverstyle components
+   - Can you combine Button + Typography + Icons?
+   - Can you use existing form components?
+3. **Check similar patterns** in the existing codebase
+
+   - Has someone already built this?
+
+4. **Confirm 3+ times** that the component truly doesn't exist
+
+### If Component TRULY Doesn't Exist - Create in `/src/components/my-components/`
+
+```tsx
+// src/components/my-components/MyCustomCard.tsx
+
+import { Typography, Icons } from "@riversidefm/riverstyle";
+
+interface MyCustomCardProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+export function MyCustomCard({ title, children }: MyCustomCardProps) {
+  return (
+    <div
+      style={{
+        // ✅ MUST use Riverstyle color tokens
+        background: "var(--color-secondary-c900)",
+        border: "1px solid var(--color-secondary-c700)",
+        borderRadius: "12px",
+        padding: "24px",
+      }}
+    >
+      {/* ✅ MUST use Typography component */}
+      <Typography variant="headingSmall">{title}</Typography>
+
+      <div
+        style={{
+          // ✅ MUST use color and font tokens
+          color: "var(--color-secondary-c300)",
+          font: "var(--font-body-medium)",
+          marginTop: "12px",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+```
+
+### Custom Component Rules (MANDATORY):
+
+1. **Colors** - ONLY use `var(--color-*)` tokens, NEVER hex values
+2. **Typography** - Use `<Typography>` component or `var(--font-*)` tokens
+3. **Icons** - Import from `@riversidefm/riverstyle`, not custom SVGs
+4. **Theme** - Follow dark theme (secondary-c900+ for backgrounds)
+5. **Accents** - Use primary-c800 (#7848ff) for brand color
+6. **Export** - Add export to `/src/components/my-components/index.ts`
+7. **Showcase** - Add demo to `/my-components` page
+
+### Custom Component Rules (MANDATORY):
+
+- ✅ **Colors** - ONLY use `var(--color-*)` tokens, NEVER hardcode hex values
+- ✅ **Typography** - Use `<Typography>` component or `var(--font-*)` tokens
+- ✅ **Icons** - Use Riverstyle icons first; only create custom if truly not available
+- ✅ **Theme** - Follow dark theme (secondary-c900+ for backgrounds)
+- ✅ **Accents** - Use primary-c800 (#7848ff) for brand color
+
+---
+
+### Priority Order (ALWAYS Follow This)
+
+1. **First:** Check if Riverstyle has the component, icon, color, or style
+2. **Second:** Check if you can compose it from existing Riverstyle elements
+3. **Third:** Only then create custom, using Riverstyle tokens
+
+### DO NOT (General)
+
+- ❌ Use hardcoded hex colors - use `var(--color-*)` tokens
+- ❌ Use arbitrary font sizes - use `var(--font-*)` tokens
+- ❌ Skip checking Riverstyle before creating custom elements
+- ❌ Use font families other than Inter
+- ❌ Guess icon names - look up the actual file in the icons folder
+- ❌ Create custom icons without first checking ALL icon categories
+- ❌ Try to use icons that doesn't exist that would cause errors.
+
+### DO (General)
+
+- ✅ **Always check Riverstyle first** for components, icons, colors, typography
+- ✅ Use CSS variables for all colors and typography
+- ✅ Reference Storybook before creating anything custom
+- ✅ Maintain the dark theme aesthetic (use secondary-c900+ for backgrounds)
+- ✅ Use primary-c800 (#7848ff) as the main brand accent
+- ✅ Put custom components in `/src/components/my-components/` folder
+- ✅ **Look up icon file names** in `node_modules/@riversidefm/riverstyle/icons/{category}/`
+- ✅ **Convert icon file names** to PascalCase: `home-05.svg.js` → `Icons.General.Home05`
+- ✅ Create custom elements when design system doesn't cover it (using design tokens)
